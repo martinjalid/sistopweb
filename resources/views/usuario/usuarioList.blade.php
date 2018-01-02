@@ -77,7 +77,7 @@
                         <td>{{ $usuario->dni }}</td>
                         <td>{{ $usuario->telefono }}</td>
                         <td>
-                            <a href="/cliente/id/{{ $usuario->id }}">
+                            <a href="/cliente/{{ $usuario->id }}">
                                 <i class="fa fa-eye fa-lg pointer" data-toggle="tooltip" data-placement="bottom" data-original-title="Ver Cliente"></i>
                             </a>
                         </td>

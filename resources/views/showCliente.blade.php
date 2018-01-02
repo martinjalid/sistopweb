@@ -29,7 +29,7 @@
 		    <div id="{{ $receta->id }}" class="tab-pane fade in">
 		      	<div class="row">
 			    	<div class="col-lg-2" >
-						<p class="text-primary lead-label">Tipo de Lente</p>
+						<p class="text-primary lead-label">Tipo AAde Lente</p>
 						<select class="select2 form-control notDisable" disabled> 
 							<option value="-1">Tipo de Anteojo</option>
 							@foreach($tipo_lente as $tl)

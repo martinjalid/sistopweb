@@ -10,6 +10,7 @@ use App\MaterialLente;
 use App\Tratamiento;
 use App\Profesional;
 use App\Usuario;
+use App\TipoLente;
 use \Illuminate\Http\Request;
 use Exception;
 
@@ -68,19 +69,30 @@ class UsuarioController extends Controller {
 
 	}
 
-	public function showCliente($usuario_id){
+	public function showCliente($usuario_id, $receta_id = null){
 		try {
 			
 			$usuario = Usuario::find($usuario_id);
 			$obras = ObraSocial::orderBy('id')->get();
 			$recetas = $usuario->recetas()->orderBy('created_at', 'desc')->limit(3)->get();
-			$receta = $usuario->recetas()->orderBy('created_at', 'desc')->first();
 			$profesionales = Profesional::orderBy('id')->get();
 			$material_lente = MaterialLente::orderBy('id')->get();
 			$color = Color::orderBy('id')->get();
 			$tratamiento = Tratamiento::orderBy('id')->get();
+			if ( is_null($receta_id) ) 
+				$receta = $usuario->recetas()->orderBy('created_at', 'desc')->first();
+			else
+				$receta = $usuario->recetas()->find( $receta_id );
 
-			$response = view('usuario.usuarioEdit', [
+			$tipos_lente = TipoLente::all();
+
+			if ( !is_null( $receta ) )
+				$view = 'usuario.usuarioEdit';
+			else
+				$view = 'usuario.newReceta';
+
+
+			$response = view($view, [
     			'title' 		=> 'Datos de '.$usuario->nombre.' '.$usuario->apellido,
     			'obras'			=> $obras,
     			'recetas'		=> $recetas,
@@ -90,7 +102,8 @@ class UsuarioController extends Controller {
 				'profesional' 	=> $profesionales,
 				'material_lente'=> $material_lente,
 				'color'			=> $color,
-				'tratamiento'	=> $tratamiento
+				'tratamiento'	=> $tratamiento,
+				'tipos_lente'	=> $tipos_lente
     		]);
 
 		} catch (Exception $e) {
