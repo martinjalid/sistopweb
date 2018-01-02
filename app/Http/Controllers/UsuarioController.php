@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\ObraSocial;
 use App\Receta;
+use App\Optica;
+use App\Administrador;
 use App\Color;
 use App\MaterialLente;
 use App\Tratamiento;
@@ -36,7 +38,6 @@ class UsuarioController extends Controller {
 		}catch( Exception $e ){
 			echo json_encode( array('error' => true, 'msj' => $e->getMessage(), 'line' => $e->getLine() ) );
 		}
-
 	}
 
 	public function editCliente($usuario_id, Request $request){
@@ -65,7 +66,6 @@ class UsuarioController extends Controller {
 		}
 
 		return $response;
-
 	}
 
 	public function showCliente($usuario_id){
@@ -100,21 +100,12 @@ class UsuarioController extends Controller {
 		return $response;
 	}
 
-	public function buscarUsuario(Request $request){
-		
-		$nombre = trim($request->nombre).'%';
-		$apellido = trim($request->apellido).'%';
-		$dni = trim($request->dni).'%';
-
-		$usuarios = Usuario::where('nombre' , 'like', $nombre)->where('apellido', 'like', $apellido)->where('dni', 'like', $dni)->orderBy('id', 'desc')->limit(10)->get();
-
-		return json_encode($usuarios);
-	}
-
 	public function getCliente( $nombre = null, $apellido = null, $dni = null){
 		try {
-			
-			$usuarios = Usuario::orderBy('id', 'asc');
+			$administrador = Administrador::find(1);
+
+			$usuarios = Optica::getClientes();
+			dd( $usuarios );
 
 			if ( $nombre && $nombre != 'all' ) {
 				$usuarios->where('nombre', 'like', $nombre.'%');
