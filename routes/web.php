@@ -29,8 +29,9 @@ Route::get('/', "IndexController@index");
 
 Route::get('/cliente', "UsuarioController@getCliente");
 Route::get('/cliente/nombre/{nombre?}/apellido/{apellido?}/dni/{dni?}', "UsuarioController@getCliente");
-Route::get('/cliente/id/{id}', "UsuarioController@showCliente");
-Route::put('/cliente/id/{id}/edit', "UsuarioController@editCliente");
+Route::get('/cliente/{id}', "UsuarioController@showCliente");
+Route::get('/cliente/{id}/receta/{receta_id}', "UsuarioController@showCliente");
+Route::put('/cliente/{id}/edit', "UsuarioController@editCliente");
 
 
 Route::get('/crearUsuario', "UsuarioController@crear");

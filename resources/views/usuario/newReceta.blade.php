@@ -6,23 +6,11 @@
 </div>
 @include('sidebarCliente')
 <div class="col-lg-8">
-    <?php $meses = array(   'January' => 'Enero',
-                            'February' => 'Febrero',
-                            'March' => 'Marzo',
-                            'April' => 'Abril',
-                            'May' => 'Mayo',
-                            'June' => 'Junio',
-                            'July' => 'Julio',
-                            'August' => 'Agosto',
-                            'September' => 'Septiembre',
-                            'October' => 'Octubre',
-                            'November' => 'Noviembre',
-                            'December' => 'Diciembre'  );?>
-    <h3 >Receta de {{ $meses[date('F', strtotime($receta->created_at) )].' '.date('Y', strtotime($receta->created_at) )}}</h3>
+    <h3 >Nueva Receta</h3>
     <hr>
 
-    <div id="{{ $receta->id }}">
-        @include('receta.anteojoEdit')
+    <div id="">
+        @include('receta.new')
     </div>
 </div>
 <div class="col-lg-2">
