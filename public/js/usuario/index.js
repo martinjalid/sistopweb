@@ -1,6 +1,6 @@
 var us = Usuario = function(){
 	console.log('USUARIO');
-	
+
 	this.tb			 = new DataTable();
 	this.tb.filtros  = ['nombre', 'apellido', 'dni']; // ESTA LISTA SE ORDENA COMO EL ROUTER ESPERA LAS VARIABLES
 	this.tb.pathname = location.pathname;
@@ -13,11 +13,7 @@ var us = Usuario = function(){
 
 Usuario.prototype.bind_events = function(){
 	var _this = this;
-	var url_origin = '/cliente/';
-
-	document.getElementById('new_user').addEventListener('click', function(e){
-		location.href = '/cliente/new';
-	});
+	var url_origin = '/'+window.optica_id+'/cliente/';
 
 	document.getElementById('filtro_nombre_button').addEventListener('click', function(e){
 		var nombre = document.getElementById('filtro_nombre').value; 
@@ -48,7 +44,7 @@ Usuario.prototype.bind_events = function(){
 		if( dni == '' ) 
 			dni = 'all';
 
-		var new_url 	= _this.tb.make_url(url_origin, 'dni', nombre);
+		var new_url 	= _this.tb.make_url(url_origin, 'dni', dni);
 		location.href	= new_url;
 	});
 }
@@ -97,7 +93,7 @@ UsuarioNew.prototype.bind_events = function(){
 
 	// SAVE USUARIO
 	document.getElementById('save_perfil').addEventListener('click', function(){
-		_this.user_general.save_usuario('POST', 'cliente/create' , _this.callback_save_new_perfil);
+		_this.user_general.save_usuario('POST', '/'+window.optica_id+'/cliente/create' , _this.callback_save_new_perfil);
 	});
 }
 
@@ -123,22 +119,34 @@ UsuarioGeneral.prototype.save_usuario = function(type, url, callback){
 	var telefono 	= document.getElementById('perfil_telefono').value;
 	var obra 		= document.getElementById('perfil_obra').value;
 	var num_obra 	= document.getElementById('perfil_num_obra').value;
-
-	var info = { 
-		'usuario'			: id,
-		'nombre'  			: nombre,
-		'apellido' 			: apellido,
-		'dni'				: dni,
-		'direccion'			: direccion,
-		'telefono'			: telefono,
-		'obra_social_id'  	: obra,
-		'num_obra_social'  	: num_obra
-	};
+	if ( id = 'new') {
+		var info = { 
+			'nombre'  			: nombre,
+			'apellido' 			: apellido,
+			'dni'				: dni,
+			'direccion'			: direccion,
+			'telefono'			: telefono,
+			'obra_social_id'  	: obra,
+			'num_obra_social'  	: num_obra,
+			'optica_id'			: window.optica_id
+		};
+	}else{
+		var info = { 
+			'usuario'			: id,
+			'nombre'  			: nombre,
+			'apellido' 			: apellido,
+			'dni'				: dni,
+			'direccion'			: direccion,
+			'telefono'			: telefono,
+			'obra_social_id'  	: obra,
+			'num_obra_social'  	: num_obra,
+		};
+	}
 
 	if( _this.validarPerfil(info) )
 		_this.general.send_ajax(type, url, info, callback);		
 	else
-		_this.general.notification('Hubo un error, complete los campos faltantes', '', null);
+		_this.general.notification('Error', 'Complete los campos faltantes', 'error');
 }
 
 UsuarioGeneral.prototype.bind_events = function(){

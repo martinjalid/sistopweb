@@ -19,6 +19,7 @@ class Usuario extends Authenticatable{
         'num_obra_social',
         'obra_social_id',
         'administrador_id',
+        'optica_id'
     ];
 
     public function obra(){

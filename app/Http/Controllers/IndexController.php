@@ -20,12 +20,12 @@ class IndexController extends Controller {
 	|
 	*/
 
-	public function index(){
+	public function index($optica_id){
 		$obras = ObraSocial::all();
 
 		$data = array('obras' => $obras );
 
-		return view('index', [ 'title' => 'Administración Ned', 'url' => '/', 'obras' => $obras ] );
+		return view('index', [ 'title' => 'Administración Ned', 'url' => '/'.$optica_id, 'obras' => $obras ] );
 	}
 
 }

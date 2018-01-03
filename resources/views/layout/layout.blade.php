@@ -15,8 +15,14 @@
 	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/functions.js"></script>
 	<script type="text/javascript" src="/js/toastr.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function($) {
+            window.optica_id = <?php echo session('optica_id') ?>;   
+        });
+    </script>
 </head>
 <body>
+    <?php $optica_id = session('optica_id'); ?>
 	<header id="header" class="bgm-bluegray">
         <ul class="header-inner">
             <!-- <li id="menu-trigger" data-trigger="#sidebar">
@@ -43,12 +49,14 @@
                     </div>
                 </li>
             @endif
-            <li id="menu-filtro" class="pull-right pointer">
-                <div style="color:white; font-size: 26px;">
-                    <input id="tw-switch" type="checkbox" hidden="hidden">
-                    <i class="zmdi zmdi-settings zmdi-hc-fw" title="Administración" onclick="window.location.href='/administracion'"></i>  
-                </div>
-            </li>
+            @if( Auth::user()->perfil() == 'Administrador' )
+                <li id="menu-filtro" class="pull-right pointer">
+                    <div style="color:white; font-size: 26px;">
+                        <input id="tw-switch" type="checkbox" hidden="hidden">
+                        <i class="zmdi zmdi-settings zmdi-hc-fw" title="Administración" onclick="window.location.href='/{{ $optica_id }}/administracion'"></i>  
+                    </div>
+                </li>
+            @endif
         </ul>
     </header>
 

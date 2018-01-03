@@ -90,7 +90,7 @@
             </table>
 
             <!-- BOTON NEW USER -->
-            <div tabindex="0" class="I2J05UB-ob-g" data-toggle="tooltip" data-placement="left" data-original-title="Nuevo Usuario" id="new_user">
+            <div tabindex="0" class="I2J05UB-ob-g" data-toggle="modal" data-placement="left" data-original-title="Nuevo Usuario" href="#new_user">
                 <input type="text" tabindex="-1" role="presentation" class="new_user">
                 <div>
                     <div class="I2J05UB-ob-l" style="height: 0px;"></div>
@@ -118,7 +118,7 @@
 @endsection
 
 @section('modals')
-    <div class="modal fade" id="usuario-perfil" data-keyboard="false" tabindex="-1" role="dialog">
+    <div class="modal fade" id="new_user" data-keyboard="false" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">             
                 <div class="modal-header">
@@ -207,7 +207,7 @@
                 </div>
                 <div class="modal-footer">
                     <hr>
-                    <button id="save_perfil" type="button" usuario="{{ $usuario->id }}" class="btn btn-success waves-effect pull-right">Guardar</button>
+                    <button id="save_perfil" type="button" usuario="new" class="btn btn-success waves-effect pull-right">Guardar</button>
                     <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
@@ -221,6 +221,7 @@
         <script type="text/javascript"> // INIT
             $(document).ready(function() {
                 var us = new Usuario();
+                var newUs = new UsuarioNew()
             });
         </script>
     @endsection

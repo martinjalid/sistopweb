@@ -65,7 +65,9 @@ class LoginController extends Controller
             if( $administrador->perfil() == 'Administrador' && $administrador->opticas()->count() > 1){
 
             }else{
-                $response['url'] = '/'.$administrador->opticas()->first()->id.'/cliente';
+                $optica_id = $administrador->opticas()->first()->id;
+                $response['url'] = '/'.$optica_id.'/cliente';
+                session(['optica_id' => $optica_id]);
             }
         
         } catch (Exception $e) {

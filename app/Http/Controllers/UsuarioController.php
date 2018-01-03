@@ -24,7 +24,7 @@ class UsuarioController extends Controller {
 			$usuario = Usuario::find($usuario_id);
 
 			if ( !$usuario )
-				$usuario->create( $request->all() );
+				Usuario::create( $request->all() );
 			else
 				$usuario->update( $request->all() );
 
@@ -92,7 +92,7 @@ class UsuarioController extends Controller {
 
 			$response = view('usuario.usuarioList', [
     			'title' 	=> 'Clientes', 
-                'url'       => '/',
+                'url'       => '/'.$optica_id,
                 'usuarios'  => $usuarios, 
     			'obras'		=> $obras,
     			'filtro' 	=> true,    			

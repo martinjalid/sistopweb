@@ -13,4 +13,8 @@ class Optica extends Authenticatable{
     public function getClientes(){
     	return $this->hasMany('App\Usuario', 'optica_id', 'id');
     }
+
+    public function usuarios(){
+        return $this->belongsToMany('App\Administrador', 'administrador_optica', 'optica_id', 'administrador_id');
+    }
 }
