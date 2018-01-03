@@ -1,6 +1,9 @@
 @extends('layout.layout')
 
 @section('content')
+<div class="crsf">
+    {{ csrf_field() }}
+</div>
 <aside id="filtro">
     <div class="filtro-inner c-overflow">
         <div class="t-uppercase m-l-20 m-b-30" style="margin-top: 30px;">
@@ -77,7 +80,7 @@
                         <td>{{ $usuario->dni }}</td>
                         <td>{{ $usuario->telefono }}</td>
                         <td>
-                            <a href="/cliente/{{ $usuario->id }}">
+                            <a href="cliente/{{ $usuario->id }}">
                                 <i class="fa fa-eye fa-lg pointer" data-toggle="tooltip" data-placement="bottom" data-original-title="Ver Cliente"></i>
                             </a>
                         </td>
@@ -119,7 +122,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">             
                 <div class="modal-header">
-                    <h4 class="modal-title">Editar Perfil</h4>  
+                    <h4 class="modal-title">Editar Cliente</h4>  
                     <hr>
                 </div>          
                 <div class="modal-body">
@@ -130,7 +133,7 @@
                             </div>                              
                             <div class="col-sm-4">
                                 <div class="fg-line">
-                                    <input id="perfil_nombre" class="form-control input-sm" type="text" name="nombre" placeholder="Nombre" value="{{ $usuario->nombre }}">
+                                    <input id="perfil_nombre" class="form-control input-sm" type="text" name="nombre" placeholder="Nombre" value="">
                                 </div>                                  
                             </div>
                             <div class="col-md-2">
@@ -138,7 +141,7 @@
                             </div>                              
                             <div class="col-sm-4">
                                 <div class="fg-line">
-                                    <input id="perfil_apellido" class="form-control input-sm" type="text" name="apellido" placeholder="Apellido" value="{{ $usuario->apellido }}">
+                                    <input id="perfil_apellido" class="form-control input-sm" type="text" name="apellido" placeholder="Apellido" value="">
                                 </div>                                  
                             </div>
                         </div>
@@ -146,19 +149,32 @@
                     <div class="row m-t-15">
                         <div class="form-group">
                             <div class="col-md-2">
-                                <label class="control-label m-t-5">Email</label>    
+                                <label class="control-label m-t-5">DNI</label>  
                             </div>                              
                             <div class="col-sm-4">
                                 <div class="fg-line">
-                                    <input id="perfil_email" class="form-control input-sm" type="text" name="email" placeholder="Email" value="">
+                                    <input id="perfil_dni" class="form-control input-sm" type="text" name="dni" placeholder="Num. Documento" value="">
                                 </div>                                  
                             </div>
                             <div class="col-md-2">
-                                <label class="control-label m-t-5">Password</label> 
+                                <label class="control-label m-t-5">Telefono</label>    
                             </div>                              
                             <div class="col-sm-4">
                                 <div class="fg-line">
-                                    <input id="perfil_password" class="form-control input-sm" type="password" name="password" placeholder="Password">
+                                    <input id="perfil_telefono" class="form-control input-sm" type="text" name="telefono" placeholder="Telefono" value="">
+                                </div>                                  
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="row m-t-15">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label class="control-label m-t-5">Direccion</label> 
+                            </div>                              
+                            <div class="col-sm-4">
+                                <div class="fg-line">
+                                    <input id="perfil_direccion" class="form-control input-sm" type="text" name="telefono" placeholder="Direccion" value="">
                                 </div>                                  
                             </div>
                         </div>
@@ -166,21 +182,26 @@
                     <div class="row m-t-15">
                         <div class="form-group">
                             <div class="col-md-2">
-                                <label class="control-label m-t-5">Fecha de Nacimiento</label>  
-                            </div>                              
+                                <label class="control-label m-t-5">Obra Social</label> 
+                            </div>
                             <div class="col-sm-4">
                                 <div class="fg-line">
-                                    <input id="perfil_fecha_nac" class="form-control input-sm" type="text" name="fecha_nac" placeholder="Fecha Nac" value="">
+                                    <select id="perfil_obra" class="form-control">
+                                        <option value="all">Seleccione la obra</option>
+                                        @foreach( $obras as $obra )
+                                            <option value="{{ $obra->id }}">{{ $obra->nombre }}</option>
+                                        @endforeach
+                                    </select> 
                                 </div>                                  
                             </div>
                             <div class="col-md-2">
-                                <label class="control-label m-t-5">Agente Teléfonico</label>    
+                                <label class="control-label m-t-5">N° Obra Social</label> 
                             </div>                              
                             <div class="col-sm-4">
                                 <div class="fg-line">
-                                    <input id="perfil_agente" class="form-control input-sm" type="text" name="agente" placeholder="Agente" value="">
+                                    <input id="perfil_num_obra" class="form-control input-sm" type="text" name="num_obra" placeholder="N° Obra Social" value="">
                                 </div>                                  
-                            </div>
+                            </div>    
                         </div>
                     </div>
                 </div>

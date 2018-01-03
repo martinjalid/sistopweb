@@ -27,26 +27,29 @@ Route::get('/logout', 'LoginController@logout');
 Route::get('/index', "IndexController@index");
 Route::get('/', "IndexController@index");
 
-Route::get('/cliente', "UsuarioController@getCliente");
-Route::get('/cliente/nombre/{nombre?}/apellido/{apellido?}/dni/{dni?}', "UsuarioController@getCliente");
-Route::get('/cliente/{id}', "UsuarioController@showCliente");
-Route::get('/cliente/{id}/receta/{receta_id}', "UsuarioController@showCliente");
-Route::put('/cliente/{id}/edit', "UsuarioController@editCliente");
+Route::group(['prefix' => '{optica_id}'], function () {
 
+	Route::get('/cliente', "UsuarioController@getCliente");
+	Route::get('/cliente/nombre/{nombre?}/apellido/{apellido?}/dni/{dni?}', "UsuarioController@getCliente");
+	Route::get('/cliente/{id}', "UsuarioController@showCliente");
+	Route::get('/cliente/{id}/receta/{receta_id}', "UsuarioController@showCliente");
+	Route::post('/cliente/{id}/edit', "UsuarioController@editCreate");
+	Route::post('/cliente/create', "UsuarioController@editCreate");
 
-Route::get('/crearUsuario', "UsuarioController@crear");
-Route::get('/nuevaObraSocial', "ObraSocialController@crear");
-Route::get('/buscarUsuario', "UsuarioController@buscarUsuario");
+	Route::get('/crearUsuario', "UsuarioController@crear");
+	Route::get('/nuevaObraSocial', "ObraSocialController@crear");
+	Route::get('/buscarUsuario', "UsuarioController@buscarUsuario");
 
-Route::group(['prefix' => 'cliente'], function () {
-	Route::get('actualizarUsuario/{usuario_id}', "UsuarioController@actualizar");
-	Route::get('{usuario_id}', 'UsuarioController@showCliente');
-	Route::get('{usuario_id}/editarReceta/{receta_id}', "RecetaController@editar");
-	Route::get('{usuario_id}/guardarReceta', "RecetaController@guardar");
-});
+	/*Route::group(['prefix' => 'cliente'], function () {
+		Route::get('actualizarUsuario/{usuario_id}', "UsuarioController@actualizar");
+		Route::get('{usuario_id}', 'UsuarioController@showCliente');
+		Route::get('{usuario_id}/editarReceta/{receta_id}', "RecetaController@editar");
+		Route::get('{usuario_id}/guardarReceta', "RecetaController@guardar");
+	});*/
 
-Route::group(['prefix' => 'administracion'], function () {
-	Route::get('', "AdministracionController@show");
-	Route::get('/guardarProfesional', "AdministracionController@guardarProfesional");
+	Route::group(['prefix' => 'administracion'], function () {
+		Route::get('', "AdministracionController@show");
+		Route::get('/guardarProfesional', "AdministracionController@guardarProfesional");
 
+	});
 });

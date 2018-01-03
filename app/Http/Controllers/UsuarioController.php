@@ -18,47 +18,14 @@ use Exception;
 
 class UsuarioController extends Controller {
 
-	public function crear( Request $request ){
-		$error = false;
+	public function editCreate($optica_id, $usuario_id = null, Request $request){
 		try{
-			$data = $request->all();
-			$usuario = new Usuario();
-
-			$usuario->nombre = trim( $data['nombre'] );
-			$usuario->apellido = trim( $data['apellido'] );
-			$usuario->obra_social_id = $data['obra_social'];
-			$usuario->dni = $data['dni'] ;
-			$usuario->direccion = trim( $data['direccion'] );
-			$usuario->telefono = $data['telefono'];
-			$usuario->num_obra_social = $data['num_obra_social'];
-			$usuario->administrador_id = 1;
-			$usuario->save();
-
-			return $usuario;
-
-		}catch( Exception $e ){
-			echo json_encode( array('error' => true, 'msj' => $e->getMessage(), 'line' => $e->getLine() ) );
-		}
-	}
-
-	public function editCliente($usuario_id, Request $request){
-		try{
-			$data = $request->all();
-
 			$usuario = Usuario::find($usuario_id);
 
-			if ( !$usuario ) {
-				throw new Exception("Error Processing Request", 1);
-			}
-
-			$usuario->nombre = trim( $data['nombre'] );
-			$usuario->apellido = trim( $data['apellido'] );
-			$usuario->obra_social_id = $data['obra'];
-			$usuario->dni = $data['dni'];
-			$usuario->direccion = trim( $data['direccion'] );
-			$usuario->telefono = $data['telefono'];
-			$usuario->num_obra_social = $data['num_obra'];
-			$usuario->save();
+			if ( !$usuario )
+				$usuario->create( $request->all() );
+			else
+				$usuario->update( $request->all() );
 
 			$response = ['error' => false];
 
@@ -69,7 +36,7 @@ class UsuarioController extends Controller {
 		return $response;
 	}
 
-	public function showCliente($usuario_id, $receta_id = null){
+	public function showCliente($optica_id, $usuario_id, $receta_id = null){
 		try {
 			
 			$usuario = Usuario::find($usuario_id);
@@ -79,6 +46,7 @@ class UsuarioController extends Controller {
 			$material_lente = MaterialLente::orderBy('id')->get();
 			$color = Color::orderBy('id')->get();
 			$tratamiento = Tratamiento::orderBy('id')->get();
+			
 			if ( is_null($receta_id) ) 
 				$receta = $usuario->recetas()->orderBy('created_at', 'desc')->first();
 			else
@@ -86,13 +54,7 @@ class UsuarioController extends Controller {
 
 			$tipos_lente = TipoLente::all();
 
-			if ( !is_null( $receta ) )
-				$view = 'usuario.usuarioEdit';
-			else
-				$view = 'usuario.newReceta';
-
-
-			$response = view($view, [
+			$response = view('usuario.usuarioEdit', [
     			'title' 		=> 'Datos de '.$usuario->nombre.' '.$usuario->apellido,
     			'obras'			=> $obras,
     			'recetas'		=> $recetas,
@@ -113,13 +75,15 @@ class UsuarioController extends Controller {
 		return $response;
 	}
 
-	public function getCliente( $nombre = null, $apellido = null, $dni = null){
+	public function getCliente( $optica_id, $nombre = null, $apellido = null, $dni = null){
 		try {
 			$administrador = Administrador::find(1);
 
-			$usuarios = Optica::getClientes();
-			dd( $usuarios );
+			$optica = Optica::find($optica_id);
+			$usuarios = $optica->getClientes();
+			$obras = ObraSocial::orderBy('id')->get();
 
+			
 			if ( $nombre && $nombre != 'all' ) {
 				$usuarios->where('nombre', 'like', $nombre.'%');
 			}
@@ -127,10 +91,11 @@ class UsuarioController extends Controller {
 			$usuarios = $usuarios->paginate();
 
 			$response = view('usuario.usuarioList', [
-    			'title' 	 => 'Clientes', 
-                'url'        => '/',
-                'usuarios'   => $usuarios, 
-    			'filtro' 	 => true,    			
+    			'title' 	=> 'Clientes', 
+                'url'       => '/',
+                'usuarios'  => $usuarios, 
+    			'obras'		=> $obras,
+    			'filtro' 	=> true,    			
     		]);
 
 		} catch (Exception $e) {

@@ -76,7 +76,7 @@ UsuarioEdit.prototype.bind_events = function(){
 	//});	
 
 	document.getElementById('save_perfil').addEventListener('click', function(e){
-		_this.user_general.save_usuario('PUT', location.href+'/edit', _this.callback_save_perfil);		
+		_this.user_general.save_usuario('POST', location.href+'/edit', _this.callback_save_perfil);		
 	});
 	
 }
@@ -97,7 +97,7 @@ UsuarioNew.prototype.bind_events = function(){
 
 	// SAVE USUARIO
 	document.getElementById('save_perfil').addEventListener('click', function(){
-		_this.user_general.save_usuario('POST', '/usuario/new' , _this.callback_save_new_perfil);
+		_this.user_general.save_usuario('POST', 'cliente/create' , _this.callback_save_new_perfil);
 	});
 }
 
@@ -125,14 +125,14 @@ UsuarioGeneral.prototype.save_usuario = function(type, url, callback){
 	var num_obra 	= document.getElementById('perfil_num_obra').value;
 
 	var info = { 
-		'usuario'	: id,
-		'nombre'  	: nombre,
-		'apellido' 	: apellido,
-		'dni'		: dni,
-		'direccion'	: direccion,
-		'telefono'	: telefono,
-		'obra'  	: obra,
-		'num_obra'  : num_obra
+		'usuario'			: id,
+		'nombre'  			: nombre,
+		'apellido' 			: apellido,
+		'dni'				: dni,
+		'direccion'			: direccion,
+		'telefono'			: telefono,
+		'obra_social_id'  	: obra,
+		'num_obra_social'  	: num_obra
 	};
 
 	if( _this.validarPerfil(info) )
