@@ -38,7 +38,6 @@ class UsuarioController extends Controller {
 
 	public function showCliente($optica_id, $usuario_id, $receta_id = null){
 		try {
-			
 			$usuario = Usuario::find($usuario_id);
 			$obras = ObraSocial::orderBy('id')->get();
 			$recetas = $usuario->recetas()->orderBy('created_at', 'desc')->limit(3)->get();
