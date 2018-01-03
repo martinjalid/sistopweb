@@ -14,4 +14,12 @@ class Administrador extends Authenticatable{
         'password', 'remember_token',
     ];
 
+    public function perfil(){
+        return $this->hasOne('App\Perfil', 'id', 'perfil_id')->first()->nombre;
+    }
+
+    public function opticas(){
+        return $this->belongsToMany('App\Optica', 'administrador_optica', 'administrador_id', 'optica_id');
+    }
+
 }

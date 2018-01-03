@@ -30,7 +30,7 @@
         <div class="">
             @foreach( $recetas as $receta )
                 <div class="row m-t-5">
-                    <button type="button" class="btn btn-default waves-effect btn-panel" onclick="window.location.href='/cliente/{{ $usuario->id }}/receta/{{ $receta->id }}'" style="width: 200px; height: 100px">
+                    <button type="button" class="btn btn-default waves-effect btn-panel" onclick="window.location.href='/{{ $usuario->optica_id }}/cliente/{{ $usuario->id }}/receta/{{ $receta->id }}'" style="width: 200px; height: 100px">
                         <h4>{{ $receta->tipo_lente() }}</h4>
                         <p>
                             Detalle: <b>{{ $receta->detalle_lente }}</b><br>

@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use App\Administrador;
 
 class RedirectIfAuthenticated
 {
@@ -18,7 +19,12 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            return redirect('/home');
+            $administrador = Administrador::find( Auth::id() );
+            if( $administrador->perfil() == 'Administrador' && $administrador->opticas()->count() > 1){
+                
+            }else{
+                return redirect( '/'.$administrador->opticas()->first()->id.'/cliente' );
+            }
         }
 
         return $next($request);

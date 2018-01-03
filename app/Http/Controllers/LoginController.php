@@ -40,7 +40,7 @@ class LoginController extends Controller
     {   
         return Validator::make($request->all(), [
             'mail' => 'required|email|max:255',
-            'password' => 'required|min:6',
+            'password' => 'required|min:5',
         ]);
     }
 
@@ -60,6 +60,13 @@ class LoginController extends Controller
                 $response = ['error' => false];
             else               
                 $response = ['error' => true, 'msj' => 'Datos incorrectos.'];
+
+            $administrador = Administrador::find( Auth::id() );
+            if( $administrador->perfil() == 'Administrador' && $administrador->opticas()->count() > 1){
+
+            }else{
+                $response['url'] = '/'.$administrador->opticas()->first()->id.'/cliente';
+            }
         
         } catch (Exception $e) {
             $response = $this->formatError($e);

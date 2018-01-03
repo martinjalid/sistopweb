@@ -35,6 +35,7 @@
 
 @section('js')
     <script type="text/javascript" src="{{ asset('js/login/index.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/toastr.js') }}"></script>
     <script type="text/javascript"> // INIT
         document.addEventListener("DOMContentLoaded", function(event) { 
             var lg = new Login();

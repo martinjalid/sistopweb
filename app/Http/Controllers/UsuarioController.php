@@ -14,6 +14,7 @@ use App\Profesional;
 use App\Usuario;
 use App\TipoLente;
 use \Illuminate\Http\Request;
+use Auth;
 use Exception;
 
 class UsuarioController extends Controller {
@@ -38,7 +39,6 @@ class UsuarioController extends Controller {
 
 	public function showCliente($optica_id, $usuario_id, $receta_id = null){
 		try {
-			
 			$usuario = Usuario::find($usuario_id);
 			$obras = ObraSocial::orderBy('id')->get();
 			$recetas = $usuario->recetas()->orderBy('created_at', 'desc')->limit(3)->get();
@@ -59,7 +59,7 @@ class UsuarioController extends Controller {
     			'obras'			=> $obras,
     			'recetas'		=> $recetas,
     			'receta'		=> $receta,
-                'url'       	=> '/cliente',
+                'url'       	=> '/'.$optica_id.'/cliente',
                 'usuario'   	=> $usuario,
 				'profesional' 	=> $profesionales,
 				'material_lente'=> $material_lente,

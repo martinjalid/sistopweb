@@ -1,21 +1,22 @@
 var gral = General = function(){}
 
-General.prototype.notification = function(title, msj, callback = null){
-  	if ( Notification.permission !== "granted" )
-    	Notification.requestPermission();
-  	else {
-	    var notification = new Notification(title, {
-	      	icon: '/images/icon.png',
-	      	body: msj,
-	    });
+General.prototype.notification = function(title, msj, type = 'success', callback = null){
+  	// if ( Notification.permission !== "granted" )
+   //  	Notification.requestPermission();
+  	// else {
+	  //   var notification = new Notification(title, {
+	  //     	icon: '/images/icon.jpg',
+	  //     	body: msj,
+	  //   });
 
-	    notification.onclick = function(callback) {
-	    	if( callback )
-	    		callback();
-	    };
+	  //   notification.onclick = function(callback) {
+	  //   	if( callback )
+	  //   		callback();
+	  //   };
 
-	    notification.onclick(callback);
-  	}
+	  //   notification.onclick(callback);
+  	// }
+  	toastr[type](msj, title	);
 }
 
 General.prototype.copy = function(id){	
@@ -44,14 +45,18 @@ General.prototype.send_ajax = function(type, url, info, callback, returnResponse
 	xhr.onload = function() {
 	    if (xhr.status === 200) {
 	        var response = JSON.parse(xhr.responseText);
-
 	        if( returnResponse )
 	        	callback(response);
 	        else{
 		        if( response.error )
-		        	_this.notification('Hubo un error al guardar', response.msj, null);
-		        else
-		        	_this.notification('Actualizado correctamente', '', callback);	        		        
+		        	toastr['error']('Hubo un error al guardar', response.msj);
+		        else{
+  					toastr.options.onHidden = function() { 
+  						callback();
+  					}
+		        	toastr['success']('Actualizado correctamente');
+		        }
+
 		    }
 	    }
 	};

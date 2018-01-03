@@ -23,8 +23,7 @@ Login.prototype.bind_events = function(){
 				password : pass,
 				remember: remember
 			}
-
-			_this.send_ajax('POST', '/login', info, 'Iniciando...', '', _this.redirectLogin);
+			_this.send_ajax('POST', '/login', info, _this.redirectLogin, true);
 		});
 	}
 
@@ -39,16 +38,16 @@ Login.prototype.bind_events = function(){
 				email: email
 			}
 
-			_this.send_ajax('POST', '/reset', info, 'Password reseteada...', '', _this.redirectLogin);
+			_this.send_ajax('POST', '/reset', info, _this.redirectLogin, true);
 		});	
 	}
 }
 
-Login.prototype.redirectLogin = function(){
-	location.href = '/login';
+Login.prototype.redirectLogin = function(resp){
+	location.href = resp.url;
 }
 
-Login.prototype.send_ajax = function(type, url, info, title, msj, callback){
+Login.prototype.send_ajax = function(type, url, info, callback, returnResponse = false){
 	var _this = this;
 	var xhr = new XMLHttpRequest();
 	xhr.open(type, url);
@@ -57,10 +56,19 @@ Login.prototype.send_ajax = function(type, url, info, title, msj, callback){
 	xhr.onload = function() {
 	    if (xhr.status === 200) {
 	        var response = JSON.parse(xhr.responseText);
-	        if( response.error )
-	        	_this.notification('Hubo un error en el login', response.msj, null);
-	        else
-	        	_this.notification(title, msj, callback);	        		        
+	        if( returnResponse )
+	        	callback(response);
+	        else{
+		        if( response.error )
+		        	toastr['error']('Hubo un error al guardar', response.msj);
+		        else{
+  					toastr.options.onHidden = function() { 
+  						callback();
+  					}
+		        	toastr['success']('Actualizado correctamente');
+		        }
+
+		    }
 	    }
 	};
 

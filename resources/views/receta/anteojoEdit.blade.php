@@ -318,7 +318,7 @@ function signed($num){
         <div class="col-md-1 p-r-0 m-l-10">
             <label class="control-label m-t-5">Observación</label> 
         </div>
-        <div class="col-sm-8">
+        <div class="col-sm-8 m-l-10">
             <div class="fg-line">
                 <textarea id="observacion" class="form-control" cols="80" rows="7" style="height: 155px; width: 750px">{{ $receta->observacion }}</textarea>
             </div>                                  
@@ -326,7 +326,7 @@ function signed($num){
     </div>
     <div class="row">
     <hr>
-        <div class="col-lg-2" style="margin-top: 5px;">
+        <div class="col-lg-3" style="margin-top: 5px;">
             <button type="button" name="guardar_receta" class="but btn btn-primary" style="background: #468e46">Guardar Receta</button>
         </div>
     </div>

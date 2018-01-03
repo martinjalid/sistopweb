@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS `perfil` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(15),
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;

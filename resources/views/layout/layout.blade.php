@@ -5,14 +5,16 @@
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/css/app.min.1.css">
-	<link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/css/toastr.css">
     <link href="/css/material-design-iconic-font.min.css" rel="stylesheet">
     <link rel="icon" type="image/jpg" href="/images/icon.jpg">
 
 	<!-- JS -->
 	<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="/js/functions.js"></script>
+    <script type="text/javascript" src="/js/functions.js"></script>
+	<script type="text/javascript" src="/js/toastr.js"></script>
 </head>
 <body>
 	<header id="header" class="bgm-bluegray">
@@ -27,7 +29,7 @@
             <li class="logo">
                 <a href="{{ $url }}">{{ $title }}</a>
             </li>
-            <li class="logo" style=" position: absolute; width: 100%; left: 0; text-align: center; margin:0 auto;">
+            <li class="logo" style=" position: absolute; left: 45%; text-align: center; margin:0 auto;">
             	<a href="{{ $url }}">Sistop Web</a>
             </li>
             <li class="logo pull-right">
