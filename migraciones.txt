@@ -1,81 +1,17 @@
-SET FOREIGN_KEY_CHECKS = 0;
+ALTER TABLE receta_lente ADD COLUMN producto_id tinyint NOT NULL;
+alter table receta_lente add column activo tinyint not null default 1 ;
 
-DROP TABLE IF EXISTS `usuario`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `usuario` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(45) NOT NULL,
-  `apellido` varchar(45) NOT NULL,
-  `dni` int(11) DEFAULT NULL,
-  `telefono` varchar(20) DEFAULT NULL,
-  `direccion` varchar(45) DEFAULT NULL,
-  `num_obra_social` varchar(45) DEFAULT NULL,
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL,
-  `obra_social_id` int(11) NOT NULL,
-  `optica_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_usuario_obra_social_idx` (`obra_social_id`),
-  KEY `fk_usuario_optica1_idx` (`optica_id`),
-  CONSTRAINT `fk_usuario_optica1` FOREIGN KEY (`optica_id`) REFERENCES `optica` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_usuario_obra_social` FOREIGN KEY (`obra_social_id`) REFERENCES `obra_social` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
-INSERT INTO `usuario` VALUES (2,'Martin','Jalid',37349950,'1133241876','Jujuy 34644','1112223334','2017-05-24 00:59:57','2018-01-03 00:34:49',2,3),(3,'Agustin','Gomez',37349950,'1133241876','Jujuy 34644','1112223334','2017-06-08 02:05:07','2018-01-03 00:41:55',2,3);
+////// GIT ////////
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+[remote "origin"]
+        url = git@github.com:martinjalid/sistopweb.git
+        fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+        remote = origin
+        merge = refs/heads/master
 
-DROP TABLE producto;
-
-ALTER TABLE receta DROP COLUMN producto_id;
-
-DROP TABLE IF EXISTS `receta_lente`;
-CREATE TABLE `receta_lente` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `od_esferico` float DEFAULT NULL,
-  `od_cilindrico` float DEFAULT NULL,
-  `od_eje` float DEFAULT NULL,
-  `oi_esferico` float DEFAULT NULL,
-  `oi_cilindrico` float DEFAULT NULL,
-  `oi_eje` float DEFAULT NULL,
-  `querometria_od` float DEFAULT NULL,
-  `querometria_id` float DEFAULT NULL,
-  `tipo_lente` varchar(40) DEFAULT NULL,
-  `diametro` varchar(40) DEFAULT NULL,
-  `radio` varchar(40) DEFAULT NULL,
-  `color` varchar(40) DEFAULT NULL,
-  `usuario_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `lente_prueba`;
-CREATE TABLE `lente_prueba` (
-  `receta_lente_id` int(11) NOT NULL AUTO_INCREMENT,
-  `od_esferico` float DEFAULT NULL,
-  `od_cilindrico` float DEFAULT NULL,
-  `od_eje` float DEFAULT NULL,
-  `oi_esferico` float DEFAULT NULL,
-  `oi_cilindrico` float DEFAULT NULL,
-  `oi_eje` float DEFAULT NULL,
-  `od_agudeza` int(11) DEFAULT NULL,
-  `oi_agudeza` int(11) DEFAULT NULL,
-  `ao_agudeza` int(11) DEFAULT NULL,
-  PRIMARY KEY (`receta_lente_id`),
-  KEY `fk_receta_lente1_idx` (`receta_lente_id`),
-  CONSTRAINT `fk_receta_lente1` FOREIGN KEY (`receta_lente_id`) REFERENCES `receta_lente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `lente_oftalmologo`;
-CREATE TABLE `lente_oftalmologo` (
-  `receta_lente_id` int(11) NOT NULL AUTO_INCREMENT,
-  `od_esferico` float DEFAULT NULL,
-  `od_cilindrico` float DEFAULT NULL,
-  `od_eje` float DEFAULT NULL,
-  `oi_esferico` float DEFAULT NULL,
-  `oi_cilindrico` float DEFAULT NULL,
-  `oi_eje` float DEFAULT NULL,
-  PRIMARY KEY (`receta_lente_id`),
-  KEY `fk_receta_lente2_idx` (`receta_lente_id`),
-  CONSTRAINT `fk_receta_lente2` FOREIGN KEY (`receta_lente_id`) REFERENCES `receta_lente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;

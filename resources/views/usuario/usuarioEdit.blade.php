@@ -6,40 +6,46 @@
 </div>
 @include('sidebarCliente')
 <div class="col-lg-8">
-    <?php $meses = array(   'January' => 'Enero',
-                            'February' => 'Febrero',
-                            'March' => 'Marzo',
-                            'April' => 'Abril',
-                            'May' => 'Mayo',
-                            'June' => 'Junio',
-                            'July' => 'Julio',
-                            'August' => 'Agosto',
+    <?php $meses = array(   'January'   => 'Enero',
+                            'February'  => 'Febrero',
+                            'March'     => 'Marzo',
+                            'April'     => 'Abril',
+                            'May'       => 'Mayo',
+                            'June'      => 'Junio',
+                            'July'      => 'Julio',
+                            'August'    => 'Agosto',
                             'September' => 'Septiembre',
-                            'October' => 'Octubre',
-                            'November' => 'Noviembre',
-                            'December' => 'Diciembre'  );?>
-    <h3 >Receta de {{ $meses[date('F', strtotime($receta->created_at) )].' '.date('Y', strtotime($receta->created_at) )}}</h3>
+                            'October'   => 'Octubre',
+                            'November'  => 'Noviembre',
+                            'December'  => 'Diciembre'  );?>
+    <h3 >Receta de {{ $receta->producto->nombre }} - {{ $meses[ $receta->created_at->format('F') ].' '.$receta->created_at->format('Y')}}</h3>
     <hr>
 
-    <div id="{{ $receta->id }}">
-        @include('receta.anteojoEdit')
-    </div>
+    @if( $receta->producto->nombre != 'Anteojo' )
+        <div id="{{ $receta->id }}">
+            @include('receta.anteojoEdit')
+        </div>
+    @else
+        <div id="{{ $receta->id }}">
+            @include('receta.lenteEdit')
+        </div>
+    @endif
 </div>
 <div class="col-lg-2">
     <div id="recetas" class="" aria-expanded="true">
-        <div class="">
-            @foreach( $recetas as $receta )
-                <div class="row m-t-5">
-                    <button type="button" class="btn btn-default waves-effect btn-panel" onclick="window.location.href='/{{ $usuario->optica_id }}/cliente/{{ $usuario->id }}/receta/{{ $receta->id }}'" style="width: 200px; height: 100px">
-                        <h4>{{ $receta->tipo_lente() }}</h4>
-                        <p>
-                            Detalle: <b>{{ $receta->detalle_lente }}</b><br>
-                            Fecha: <b>{{ date_format($receta->created_at, 'm-Y') }}</b><br>
-                        </p>
-                    </button>   
-                </div>
-            @endforeach
-        </div>
+        <h3>Ultimas Recetas</h3>
+        <hr>
+        @foreach( $recetas as $receta )
+            <div class="row m-t-5">
+                <button type="button" class="btn btn-default waves-effect btn-panel" onclick="window.location.href='/{{ $usuario->optica_id }}/cliente/{{ $usuario->id }}/receta/{{ $receta->id }}'" style="width: 200px; height: 100px">
+                    <h4>{{ $receta->producto->nombre }} - {{ $receta->tipo_lente() }}</h4>
+                    <p>
+                        Detalle: <b>{{ $receta->detalle_lente }}</b><br>
+                        Fecha: <b>{{ $receta->created_at->format('m/Y') }}</b><br>
+                    </p>
+                </button>   
+            </div>
+        @endforeach
     </div>
 </div>
 @endsection
@@ -148,7 +154,6 @@
         <script type="text/javascript"> // INIT
             $(document).ready(function() {
                 var usuarioEdit = new UsuarioEdit();
-                var recetaEdit = new RecetaEdit();
             });
         </script>
     @endsection

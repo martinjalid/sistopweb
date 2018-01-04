@@ -6,9 +6,27 @@ var rec = RecetaEdit = function(){
 }
 
 RecetaEdit.prototype.bind_events = function(){
-
+	document.getElementById('l_tratamiento').addEventListener('change', function(e){
+			var tipo_t = document.getElementById('l_tipo_tratamiento');
+			if (this.value == -1) {
+				tipo_t.parentNode.parentNode.style.display = 'none';
+				tipo_t.value = '';
+			}else{
+				console.log( this.innerText );
+				tipo_t.parentNode.parentNode.style.display = 'block';
+			}
+		});
 };
 
+var rec_len = RecetaLenteEdit = function(){
+	console.log('RECETA LENTE EDIT');
+
+	this.bind_events();
+}
+
+RecetaLenteEdit.prototype.bind_events = function(){
+	
+}
 
 var rec_gen = RecetaGeneral = function(){
 
@@ -16,19 +34,6 @@ var rec_gen = RecetaGeneral = function(){
 };
 
 RecetaGeneral.prototype.bind_events = function(){
-
-	document.getElementById('l_tratamiento').addEventListener('change', function(e){
-		var tipo_t = document.getElementById('l_tipo_tratamiento');
-		if (this.value == -1) {
-			tipo_t.parentNode.parentNode.style.display = 'none';
-			tipo_t.value = '';
-		}else{
-			console.log( this.innerText );
-			tipo_t.parentNode.parentNode.style.display = 'block';
-		}
-	});
-
-
 
 };
 

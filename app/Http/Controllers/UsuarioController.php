@@ -40,19 +40,22 @@ class UsuarioController extends Controller {
 	public function showCliente($optica_id, $usuario_id, $receta_id = null){
 		try {
 			$usuario = Usuario::find($usuario_id);
+			$receta = $usuario->recetas()->find( $receta_id );
+			if ( is_null( $receta ) )
+				$receta = $usuario->recetasLente()->find( $receta_id );
+			
+			if ( is_null( $receta ) )
+				throw new Exception("No se encontro la receta", 1);
+
 			$obras = ObraSocial::orderBy('id')->get();
 			$recetas = $usuario->recetas()->orderBy('created_at', 'desc')->limit(3)->get();
 			$profesionales = Profesional::orderBy('id')->get();
 			$material_lente = MaterialLente::orderBy('id')->get();
 			$color = Color::orderBy('id')->get();
 			$tratamiento = Tratamiento::orderBy('id')->get();
-			
-			if ( is_null($receta_id) ) 
-				$receta = $usuario->recetas()->orderBy('created_at', 'desc')->first();
-			else
-				$receta = $usuario->recetas()->find( $receta_id );
 
 			$tipos_lente = TipoLente::all();
+			// dd( $usuario->getLastRecetas() );
 
 			$response = view('usuario.usuarioEdit', [
     			'title' 		=> 'Datos de '.$usuario->nombre.' '.$usuario->apellido,
@@ -86,6 +89,14 @@ class UsuarioController extends Controller {
 			
 			if ( $nombre && $nombre != 'all' ) {
 				$usuarios->where('nombre', 'like', $nombre.'%');
+			}
+
+			if ( $apellido && $apellido != 'all' ) {
+				$usuarios->where('apellido', 'like', $apellido.'%');
+			}
+
+			if ( $dni && $dni != 'all' ) {
+				$usuarios->where('dni', 'like', $dni.'%');
 			}
 
 			$usuarios = $usuarios->paginate();

@@ -62,6 +62,7 @@
                         <th data-column-id="sender">Nombre</th>
                         <th data-column-id="perfil">DNI</th>
                         <th data-column-id="perfil">Telefono</th>
+                        <th data-column-id="perfil">Ultima Receta</th>
                         <th data-column-id="acciones"></th>
                     </tr>
                 </thead>
@@ -78,9 +79,10 @@
                         <td>{{ $usuario->nombre.' '.$usuario->apellido }}</td>
                         <td>{{ $usuario->dni }}</td>
                         <td>{{ $usuario->telefono }}</td>
+                        <td style="text-align: justify;">{{ is_null($usuario->ultimaReceta()) ? 'No tiene receta' : $usuario->ultimaReceta()->created_at->format('m/Y') }}</td>
                         <td>
                             @if( $usuario->recetas()->count() )
-                                <a href="cliente/{{ $usuario->id }}">
+                                <a href="/{{ session('optica_id') }}/cliente/{{ $usuario->id }}/receta/{{ $usuario->ultimaReceta()->id }}">
                                     <i class="fa fa-eye fa-lg pointer" data-toggle="tooltip" data-placement="bottom" data-original-title="Ver Ultima Receta del Cliente"></i>
                                 </a>
                             @endif
