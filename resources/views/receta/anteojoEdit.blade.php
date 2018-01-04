@@ -81,7 +81,7 @@ function signed($num){
                 </div>
             </div>
             <div class="col-lg-2 multi">
-                <label class="control-label m-t-5">Material Lente</label> 
+                <label class="control-label m-t-5">Color</label> 
                 <div class="fg-line">
                     <select class="select2 form-control" name="c_color_{{ $receta->id }}"> 
                         <option value="-1">Color</option>

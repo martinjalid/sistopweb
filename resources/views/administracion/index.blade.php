@@ -5,6 +5,9 @@
 @endsection
 
 @section('content')
+<div class="crsf">
+    {{ csrf_field() }}
+</div>
 	<div class="container">
 		<div class="card">
 			<div class="card-body card-padding">
@@ -74,12 +77,10 @@
 
     @section('js')
         <script type="text/javascript" src="/js/general/index.js"></script>
-        <script type="text/javascript" src="/js/usuario/index.js"></script>
-        <script type="text/javascript" src="/js/receta/index.js"></script>
+        <script type="text/javascript" src="/js/administracion/index.js"></script>
         <script type="text/javascript"> // INIT
             $(document).ready(function() {
-                var usuarioEdit = new UsuarioEdit();
-                var recetaEdit = new RecetaEdit();
+                var admi = new Administracion();
             });
         </script>
     @endsection

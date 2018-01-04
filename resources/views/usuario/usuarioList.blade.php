@@ -73,15 +73,19 @@
                             </td>
                         </tr>
                     @endif
-
                     @foreach($usuarios as $usuario)
                     <tr>
                         <td>{{ $usuario->nombre.' '.$usuario->apellido }}</td>
                         <td>{{ $usuario->dni }}</td>
                         <td>{{ $usuario->telefono }}</td>
                         <td>
-                            <a href="cliente/{{ $usuario->id }}">
-                                <i class="fa fa-eye fa-lg pointer" data-toggle="tooltip" data-placement="bottom" data-original-title="Ver Cliente"></i>
+                            @if( $usuario->recetas()->count() )
+                                <a href="cliente/{{ $usuario->id }}">
+                                    <i class="fa fa-eye fa-lg pointer" data-toggle="tooltip" data-placement="bottom" data-original-title="Ver Ultima Receta del Cliente"></i>
+                                </a>
+                            @endif
+                            <a>
+                                <i class="fa fa-plus fa-lg pointer" data-toggle="modal" href="#new_receta" data-placement="bottom" data-original-title="Nueva Receta"></i>
                             </a>
                         </td>
                     </tr>
@@ -214,15 +218,53 @@
         </div>
     </div>
 
-    @section('js')
-        <script type="text/javascript" src="/js/general/index.js"></script>
-        <script type="text/javascript" src="/js/table/index.js"></script>
-        <script type="text/javascript" src="/js/usuario/index.js"></script>
-        <script type="text/javascript"> // INIT
-            $(document).ready(function() {
-                var us = new Usuario();
-                var newUs = new UsuarioNew()
-            });
-        </script>
-    @endsection
+    <div class="modal fade" id="new_receta" data-keyboard="false" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">             
+                <div class="modal-header">
+                    <h4 class="modal-title">Nueva Receta</h4>  
+                    <hr>
+                </div>          
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label class="control-label m-t-5">Nombre</label>   
+                            </div>                              
+                            <div class="col-sm-4">
+                                <div class="fg-line">
+                                    <input id="perfil_nombre" class="form-control input-sm" type="text" name="nombre" placeholder="Nombre" value="">
+                                </div>                                  
+                            </div>
+                            <div class="col-md-2">
+                                <label class="control-label m-t-5">Apellido</label> 
+                            </div>                              
+                            <div class="col-sm-4">
+                                <div class="fg-line">
+                                    <input id="perfil_apellido" class="form-control input-sm" type="text" name="apellido" placeholder="Apellido" value="">
+                                </div>                                  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <hr>
+                    <button id="save_perfil" type="button" usuario="new" class="btn btn-success waves-effect pull-right">Guardar</button>
+                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@endsection
+@section('js')
+    <script type="text/javascript" src="/js/general/index.js"></script>
+    <script type="text/javascript" src="/js/table/index.js"></script>
+    <script type="text/javascript" src="/js/usuario/index.js"></script>
+    <script type="text/javascript"> // INIT
+        $(document).ready(function() {
+            var us = new Usuario();
+            var newUs = new UsuarioNew()
+        });
+    </script>
 @endsection

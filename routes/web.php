@@ -37,7 +37,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 		Route::group(['prefix' => 'administracion'], function () {
 			Route::get('', "AdministracionController@show");
-			Route::get('/guardarProfesional', "AdministracionController@guardarProfesional");
+			Route::get('/save_profesional', "AdministracionController@saveProfesional");
 
 		});
 	});
