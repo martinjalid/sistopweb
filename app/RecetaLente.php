@@ -31,6 +31,10 @@ class RecetaLente extends Authenticatable{
         return $this->hasOne('App\Producto', 'id', 'producto_id');
     }
 
+    public function prueba(){
+    	return $this->hasOne('App\LentePrueba', 'receta_lente_id', 'id');
+    }
+
     public function getCreatedAtAttribute($value){
         $aux = explode( '-', $value );
         return $aux[1] . '/' . $aux[0];

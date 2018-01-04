@@ -1,6 +1,11 @@
 ALTER TABLE receta_lente ADD COLUMN producto_id tinyint NOT NULL;
 alter table receta_lente add column activo tinyint not null default 1 ;
 
+insert into receta_lente(usuario_id, created_at, updated_at, producto_id, activo ) VALUES(2, NOW(), NOW(), 2, 1);
+insert into lente_prueba(receta_lente_id) VALUES(1);
+insert into lente_oftalmologo(receta_lente_id) VALUES(1);
+
+
 
 ////// GIT ////////
 [core]

@@ -9,6 +9,7 @@ class Optica extends Authenticatable{
 	use Notifiable;
 
 	protected $table = 'optica';
+	public $timestamps = false;
 
     public function getClientes(){
     	return $this->hasMany('App\Usuario', 'optica_id', 'id');
