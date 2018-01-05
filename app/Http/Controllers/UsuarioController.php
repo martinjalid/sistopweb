@@ -37,21 +37,21 @@ class UsuarioController extends Controller {
 		return $response;
 	}
 
-	public function showCliente($optica_id, $usuario_id, $producto_id, $receta_id){
+	public function showCliente($optica_id, $usuario_id, $producto_id){
 		try {
+			$optica = Optica::find( $optica_id );
 			$usuario = Usuario::find($usuario_id);
+			$producto = $usuario->productos()->find($producto_id);
 
-			if ( $producto_id == 1 ) {
-				$receta = $usuario->recetas()->find( $receta_id );
+			if ( $producto->tipoProducto->nombre == 'Anteojo' ) {
+				$receta = $producto->receta;
 			}else{
-				$receta = $usuario->recetasLente()->find( $receta_id );
+				$receta = $producto->recetaLente;
 				$prueba = $receta->prueba;
 				$oftalmologo = $receta->oftalmologo;
 			}
 			
 			$obras = ObraSocial::orderBy('id')->get();
-			$recetas = $usuario->recetas()->orderBy('created_at', 'desc')->limit(3)->get();
-			$profesionales = Profesional::orderBy('id')->get();
 			$material_lente = MaterialLente::orderBy('id')->get();
 			$color = Color::orderBy('id')->get();
 			$tratamiento = Tratamiento::orderBy('id')->get();
@@ -59,18 +59,16 @@ class UsuarioController extends Controller {
 			if ( is_null( $receta ) )
 				throw new Exception("No se encontro la receta", 1);
 
-
 			$tipos_lente = TipoLente::all();
-			// dd( $usuario->getLastRecetas() );
 
 			$response = view('usuario.usuarioEdit', [
     			'title' 		=> 'Datos de '.$usuario->nombre.' '.$usuario->apellido,
+				'optica' 		=> $optica,
     			'obras'			=> $obras,
-    			'recetas'		=> $recetas,
     			'receta'		=> $receta,
+    			'producto'		=> $producto,
                 'url'       	=> '/'.$optica_id.'/cliente',
                 'usuario'   	=> $usuario,
-				'profesional' 	=> $profesionales,
 				'material_lente'=> $material_lente,
 				'color'			=> $color,
 				'tratamiento'	=> $tratamiento,

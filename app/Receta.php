@@ -10,6 +10,7 @@ class Receta extends Authenticatable{
     use Notifiable;
 
 	protected $table = 'receta';
+	public $timestamps = false;
 
 	protected $fillable = [
 		'distancia',
@@ -35,15 +36,6 @@ class Receta extends Authenticatable{
 
     public function medico(){
         return $this->hasOne('App\Profesional', 'id', 'profesional_id')->first()->nombre;
-    }
-
-    public function producto(){
-        return $this->hasOne('App\Producto', 'id', 'producto_id');
-    }
-
-    public function getCreatedAtAttribute($value){
-    	$dt = Carbon::parse($value);
-        return $dt;
     }
 
 }

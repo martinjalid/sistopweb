@@ -10,6 +10,7 @@ class RecetaLente extends Authenticatable{
     use Notifiable;
 
 	protected $table = 'receta_lente';
+	public $timestamps = false;
 
 	protected $fillable = [
 		'od_esferico',
@@ -28,20 +29,11 @@ class RecetaLente extends Authenticatable{
 		'producto_id',
 	];
 
-	public function producto(){
-        return $this->hasOne('App\Producto', 'id', 'producto_id');
-    }
-
     public function prueba(){
     	return $this->hasOne('App\LentePrueba', 'receta_lente_id', 'id');
     }
 
     public function oftalmologo(){
     	return $this->hasOne('App\LenteOftalmologo', 'receta_lente_id', 'id');
-    }
-
-    public function getCreatedAtAttribute($value){
-    	$dt = Carbon::parse($value);
-        return $dt;
     }
 };

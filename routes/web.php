@@ -18,19 +18,19 @@ Route::get('/login', 'LoginController@viewLogin')->name('login');
 Route::post('/login', 'LoginController@login');
 Route::get('/reset', 'LoginController@viewPasswordReset');
 Route::post('/reset', 'LoginController@passwordReset');
-Route::get('/logout', 'LoginController@logout');
 //-----------//
 /* END LOGIN*/
 //-----------//
 
 Route::group(['middleware' => 'auth'], function () {
+	Route::get('/logout', 'LoginController@logout');
 
 	Route::group(['prefix' => '{optica_id}'], function () {
 		Route::get('/', "IndexController@index");
 
 		Route::get('/cliente', "UsuarioController@getCliente");
 		Route::get('/cliente/nombre/{nombre?}/apellido/{apellido?}/dni/{dni?}', "UsuarioController@getCliente");
-		Route::get('/cliente/{id}/receta/{producto_id}/{receta_id}', "UsuarioController@showCliente");
+		Route::get('/cliente/{id}/receta/{producto_id}', "UsuarioController@showCliente");
 		Route::post('/cliente/{id}/edit', "UsuarioController@editCreate");
 		Route::post('/cliente/create', "UsuarioController@editCreate");
 

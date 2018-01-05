@@ -79,10 +79,10 @@
                         <td>{{ $usuario->nombre.' '.$usuario->apellido }}</td>
                         <td>{{ $usuario->dni }}</td>
                         <td>{{ $usuario->telefono }}</td>
-                        <td style="text-align: justify;">{{ is_null($usuario->ultimaReceta()) ? 'No tiene receta' : $usuario->ultimaReceta()->producto->nombre.' - '.$usuario->ultimaReceta()->created_at->format('m/Y') }}</td>
+                        <td style="text-align: justify;">{{ is_null($usuario->ultimoProducto() ) ? 'No tiene receta' : $usuario->UltimoProducto()->tipoProducto->nombre.' - '.$usuario->ultimoProducto()->created_at->format('m/Y') }}</td>
                         <td>
-                            @if( $usuario->recetas()->count() )
-                                <a href="/{{ session('optica_id') }}/cliente/{{ $usuario->id }}/receta/{{ $usuario->ultimaReceta()->producto->id.'/'.$usuario->ultimaReceta()->id }}">
+                            @if( $usuario->productos()->count() )
+                                <a href="/{{ session('optica_id') }}/cliente/{{ $usuario->id }}/receta/{{ $usuario->ultimoProducto()->id }}">
                                     <i class="fa fa-eye fa-lg pointer" data-toggle="tooltip" data-placement="bottom" data-original-title="Ver Ultima Receta del Cliente"></i>
                                 </a>
                             @endif

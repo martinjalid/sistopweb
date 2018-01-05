@@ -181,7 +181,7 @@ function signed($num){
         </div>
         <div class="col-sm-8 m-l-10">
             <div class="fg-line">
-                <textarea id="observacion" class="form-control" cols="80" rows="7" style="height: 155px; width: 750px">{{ $receta->observacion }}</textarea>
+                <textarea id="observacion" class="form-control" cols="80" rows="7" style="height: 155px; width: 750px">{{ $producto->observacion }}</textarea>
             </div>                                  
         </div>
     </div>

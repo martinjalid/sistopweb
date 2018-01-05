@@ -18,10 +18,10 @@
                             'October'   => 'Octubre',
                             'November'  => 'Noviembre',
                             'December'  => 'Diciembre'  );?>
-    <h3 >Receta de {{ $receta->producto->nombre }} - {{ $meses[ $receta->created_at->format('F') ].' '.$receta->created_at->format('Y')}}</h3>
+    <h3 >Receta de {{ $producto->tipoProducto->nombre }} - {{ $meses[ $producto->created_at->format('F') ].' '.$producto->created_at->format('Y')}}</h3>
     <hr>
 
-    @if( $receta->producto->nombre == 'Anteojo' )
+    @if( $producto->tipoProducto->nombre == 'Anteojo' )
         <div id="{{ $receta->id }}">
             @include('receta.anteojoEdit')
         </div>
@@ -35,14 +35,13 @@
     <div id="recetas" class="" aria-expanded="true">
         <h3>Ultimas Recetas</h3>
         <hr>
-        @foreach( $recetas as $receta )
+        @foreach( $usuario->productos()->orderBy('created_at', 'desc')->limit(3)->get() as $producto )
             <div class="row m-t-5">
-                <button type="button" class="btn btn-default waves-effect btn-panel" onclick="window.location.href='/{{ $usuario->optica_id }}/cliente/{{ $usuario->id }}/receta/{{ $receta->id }}'" style="left:10%; width: 80%; height: 100px">
-                    <h4>{{ $receta->producto->nombre }} - {{ $receta->tipo_lente() }}</h4>
-                    <p>
-                        Detalle: <b>{{ $receta->detalle_lente }}</b><br>
-                        Fecha: <b>{{ $receta->created_at->format('m/Y') }}</b><br>
-                    </p>
+                <button type="button" class="btn btn-default waves-effect btn-panel" onclick="window.location.href='/{{ $usuario->optica_id }}/cliente/{{ $usuario->id }}/receta/{{ $producto->id }}'" style="left:10%; width: 80%; height: 100px">
+                    <h5>{{ $producto->tipoProducto->nombre }}</h5>
+                    <h6>
+                        Fecha: <b>{{ $producto->created_at->format('m/Y') }}</b><br>
+                    </h6>
                 </button>   
             </div>
         @endforeach

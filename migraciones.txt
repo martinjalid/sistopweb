@@ -7,3 +7,55 @@ insert into lente_oftalmologo(receta_lente_id) VALUES(1);
 ////////
 
 alter table receta_lente add column profesional_id int null default null;
+
+////////
+
+CREATE TABLE `tipo_producto` (
+  `id` int(6) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(30) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into tipo_producto(nombre) VALUES('Anteojo');
+insert into tipo_producto(nombre) VALUES('Lente de Contacto');
+
+
+CREATE TABLE `producto` (
+  `id` int(6) unsigned NOT NULL AUTO_INCREMENT,
+  `profesional_id` int(6) NULL DEFAULT NULL,
+  `usuario_id` int(6) NOT NULL,
+  `tipo_producto_id` int(6) NOT NULL,
+  `activo` tinyint NOT NULL DEFAULT 0,
+  `observacion`	text NULL DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;
+
+ALTER TABLE receta DROP COLUMN activo;
+ALTER TABLE receta DROP COLUMN created_at;
+ALTER TABLE receta DROP COLUMN updated_at;
+ALTER TABLE receta DROP COLUMN usuario_id;
+ALTER TABLE receta DROP COLUMN profesional_id;
+ALTER TABLE receta MODIFY COLUMN producto_id int(11);
+ALTER TABLE receta_lente DROP COLUMN activo;
+ALTER TABLE receta_lente DROP COLUMN created_at;
+ALTER TABLE receta_lente DROP COLUMN updated_at;
+ALTER TABLE receta_lente DROP COLUMN usuario_id;
+ALTER TABLE receta_lente MODIFY COLUMN producto_id int(11) NOT NULL;
+
+CREATE TABLE `receta` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `distancia` int(11) DEFAULT NULL,
+  `altura` int(11) DEFAULT NULL,
+  `adicion` float DEFAULT NULL,
+  `observacion` text,
+  `detalle_lente` varchar(45) DEFAULT NULL,
+  `usuario_id` int(11) NOT NULL,
+  `profesional_id` int(11) DEFAULT NULL,
+  `tipo_lente_id` int(11) NOT NULL,
+  `producto_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_receta_tipo_lente1_idx` (`tipo_lente_id`),
+  CONSTRAINT `fk_receta_tipo_lente1` FOREIGN KEY (`tipo_lente_id`) REFERENCES `tipo_lente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

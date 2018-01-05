@@ -195,14 +195,16 @@ $(document).ready(function(){
 
 	function guardarReceta(){
 		var data = {
-			tipo_lente_id : $("select[name=tipo_lente]").val(),
-			lejos_cerca : $("select[name=lejos_cerca] option:selected").text(),
-			detalle : $("input[name=detalle_lente]").val(),
-			altura : $("input[name=altura]").val(),
-			distancia : $("input[name=distancia]").val(),
-			adicion : $("input[name=adicion]").val(),
 			observacion : $("textarea[name=observacion]").val(),
 			profesional_id : $("select[name=profesional]").val() == -1 ? null : $("select[name=profesional]").val(),
+			receta :{
+				tipo_lente_id : $("select[name=tipo_lente]").val(),
+				lejos_cerca : $("select[name=lejos_cerca] option:selected").text(),
+				detalle : $("input[name=detalle_lente]").val(),
+				altura : $("input[name=altura]").val(),
+				distancia : $("input[name=distancia]").val(),
+				adicion : $("input[name=adicion]").val(),
+			},
 			lejos : {
 				der_esf : $("input[name=d_l_esf]").val(),
 				der_cil : $("input[name=d_l_cil]").val(),
