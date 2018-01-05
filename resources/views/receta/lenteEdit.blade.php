@@ -1,10 +1,4 @@
-<?php foreach ($receta->anteojos() as $anteojo) {
-    if ( $anteojo->tipo == 'cerca' ) 
-        $cerca = $anteojo;
-    else
-        $lejos = $anteojo; 
-} 
-
+<?php 
 function signed($num){
     return $num > 0 ? '+'.$num : $num;
 }
@@ -15,31 +9,7 @@ function signed($num){
     </div>
     <div class="col-sm-2">
         <div class="fg-line">
-            <input id="tipo_lente" class="form-control input-sm" type="text" value="{{ $receta->tipo_lente() }}" disabled>
-        </div>                                  
-    </div>
-    @if( $receta->tipo_lente() == 'Monofocal' )
-    <?php $select = ( $receta->anteojos()->count() == '2' ) ? '3' : ( $receta->anteojos()->tipo == 'cerca' ? '2' : '1') ;?>
-
-    <div class="col-md-1 p-r-0 m-l-10">
-        <label class="control-label m-t-5">Anteojo</label> 
-    </div>
-    <div class="col-sm-2">
-        <div class="fg-line">
-            <select class="select2 form-control" disabled> 
-                <option {{ $select ==  '1' ? 'selected' : '' }}>Lejos</option>
-                <option {{ $select ==  '2' ? 'selected' : '' }}>Cerca</option>    
-                <option {{ $select ==  '3' ? 'selected' : '' }}>Lejos y Cerca</option>    
-            </select>
-        </div>
-    </div>                                  
-    @endif
-    <div class="col-md-1 p-r-0 m-l-10">
-        <label class="control-label m-t-5">Detalle Lente</label> 
-    </div>
-    <div class="col-sm-2">
-        <div class="fg-line">
-            <input id="detalle_lente" class="form-control input-sm" type="text" name="detalle_lente" placeholder="Detalle de la lente" value="{{ $receta->detalle_lente }}">
+            <input id="tipo_lente" class="form-control input-sm" type="text" value="{{ $receta->tipo_lente }}">
         </div>                                  
     </div>
 </div>
@@ -54,19 +24,19 @@ function signed($num){
             <div class="col-lg-3 m-l-0">
                 <label class="control-label m-t-5">Esférico</label> 
                 <div class="fg-line">
-                    <input class="form-control color" name="d_c_esf" value="{{ signed($lejos->od_esferico) }}" style="color: {{ $lejos->od_esferico > 0 ? 'green' : '#c00000' }}">
+                    <input class="form-control color" name="d_c_esf" value="{{ signed($oftalmologo->od_esferico) }}">
                 </div>                                  
             </div>
             <div class="col-lg-3">
                 <label class="control-label m-t-5">Cilíndrico</label> 
                 <div class="fg-line">
-                    <input class="form-control color" name="d_c_cil" value="{{ signed($lejos->od_cilindrico) }}" style="color: {{ $lejos->od_cilindrico > 0 ? 'green' : '#c00000' }}">
+                    <input class="form-control color" name="d_c_cil" value="{{ signed($oftalmologo->od_cilindrico) }}">
                 </div>                                  
             </div>
             <div class="col-lg-3">
                 <label class="control-label m-t-5">Eje</label> 
                 <div class="fg-line">
-                    <input class="form-control color" name="d_c_eje" value="{{ signed($lejos->od_eje) }}" style="color: {{ $lejos->od_eje > 0 ? 'green' : '#c00000' }}">
+                    <input class="form-control color" name="d_c_eje" value="{{ signed($oftalmologo->od_eje) }}">
                 </div>                                  
             </div>
         </div><br>
@@ -77,19 +47,19 @@ function signed($num){
             <div class="col-lg-3 m-l-0">
                 <label class="control-label m-t-5">Esférico</label> 
                 <div class="fg-line">
-                    <input class="form-control color" name="i_c_esf" value="{{ signed($lejos->oi_esferico) }}" style="color: {{ $lejos->oi_esferico > 0 ? 'green' : '#c00000' }}">
+                    <input class="form-control color" name="i_c_esf" value="{{ signed($oftalmologo->oi_esferico) }}">
                 </div>                                  
             </div>
             <div class="col-lg-3">
                 <label class="control-label m-t-5">Cilíndrico</label> 
                 <div class="fg-line">
-                    <input class="form-control color" name="i_c_cil" value="{{ signed($lejos->oi_cilindrico) }}" style="color: {{ $lejos->oi_cilindrico > 0 ? 'green' : '#c00000' }}">
+                    <input class="form-control color" name="i_c_cil" value="{{ signed($oftalmologo->oi_cilindrico) }}">
                 </div>                                  
             </div>
             <div class="col-lg-3">
                 <label class="control-label m-t-5">Eje</label> 
                 <div class="fg-line">
-                    <input class="form-control color" name="i_c_eje" value="{{ signed($lejos->oi_eje )}}" style="color: {{ $lejos->oi_eje > 0 ? 'green' : '#c00000' }}">
+                    <input class="form-control color" name="i_c_eje" value="{{ signed($oftalmologo->oi_eje )}}">
                 </div>                                  
             </div>
         </div>
@@ -105,31 +75,31 @@ function signed($num){
             <div class="col-lg-2 m-l-0">
                 <label class="control-label m-t-5">Esférico</label> 
                 <div class="fg-line">
-                    <input class="form-control color" name="d_c_esf" value="{{ signed($cerca->od_esferico) }}" style="color: {{ $cerca->od_esferico > 0 ? 'green' : '#c00000' }}">
+                    <input class="form-control color" name="d_c_esf" value="{{ signed($prueba->od_esferico) }}">
                 </div>                                  
             </div>
             <div class="col-lg-2">
                 <label class="control-label m-t-5">Cilíndrico</label> 
                 <div class="fg-line">
-                    <input class="form-control color" name="d_c_cil" value="{{ signed($cerca->od_cilindrico) }}" style="color: {{ $cerca->od_cilindrico > 0 ? 'green' : '#c00000' }}">
+                    <input class="form-control color" name="d_c_cil" value="{{ signed($prueba->od_cilindrico) }}">
                 </div>                                  
             </div>
             <div class="col-lg-2">
                 <label class="control-label m-t-5">Eje</label> 
                 <div class="fg-line">
-                    <input class="form-control color" name="d_c_eje" value="{{ signed($cerca->od_eje) }}" style="color: {{ $cerca->od_eje > 0 ? 'green' : '#c00000' }}">
+                    <input class="form-control color" name="d_c_eje" value="{{ signed($prueba->od_eje) }}">
                 </div>                                  
             </div>
             <div class="col-lg-2">
                 <label class="control-label m-t-5">Agudeza</label> 
                 <div class="fg-line">
-                    <input class="form-control color" name="od_agudeza" value="{{ $cerca->od_eje }}">
+                    <input class="form-control color" name="od_agudeza" value="{{ $prueba->od_eje }}">
                 </div>                                  
             </div>
             <div class="col-lg-2">
                 <label class="control-label m-t-5">Ag. Ambos Ojos</label> 
                 <div class="fg-line">
-                    <input class="form-control color" name="oi_agudeza" value="{{ $cerca->oi_eje }}" >
+                    <input class="form-control color" name="oi_agudeza" value="{{ $prueba->oi_eje }}" >
                 </div>                                  
             </div>
         </div><br>
@@ -140,25 +110,25 @@ function signed($num){
             <div class="col-lg-2 m-l-0">
                 <label class="control-label m-t-5">Esférico</label> 
                 <div class="fg-line">
-                    <input class="form-control color" name="i_c_esf" value="{{ signed($cerca->oi_esferico) }}" style="color: {{ $cerca->oi_esferico > 0 ? 'green' : '#c00000' }}">
+                    <input class="form-control color" name="i_c_esf" value="{{ signed($prueba->oi_esferico) }}">
                 </div>                                  
             </div>
             <div class="col-lg-2">
                 <label class="control-label m-t-5">Cilíndrico</label> 
                 <div class="fg-line">
-                    <input class="form-control color" name="i_c_cil" value="{{ signed($cerca->oi_cilindrico) }}" style="color: {{ $cerca->oi_cilindrico > 0 ? 'green' : '#c00000' }}">
+                    <input class="form-control color" name="i_c_cil" value="{{ signed($prueba->oi_cilindrico) }}">
                 </div>                                  
             </div>
             <div class="col-lg-2">
                 <label class="control-label m-t-5">Eje</label> 
                 <div class="fg-line">
-                    <input class="form-control color" name="i_c_eje" value="{{ signed($cerca->oi_eje) }}" style="color: {{ $cerca->oi_eje > 0 ? 'green' : '#c00000' }}">
+                    <input class="form-control color" name="i_c_eje" value="{{ signed($prueba->oi_eje) }}">
                 </div>                                  
             </div>
             <div class="col-lg-2">
                 <label class="control-label m-t-5">Agudeza</label> 
                 <div class="fg-line">
-                    <input class="form-control color" name="oi_agudeza" value="{{ $cerca->oi_eje }}">
+                    <input class="form-control color" name="oi_agudeza" value="{{ $prueba->oi_eje }}">
                 </div>                                  
             </div>
         </div>

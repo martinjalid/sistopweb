@@ -21,7 +21,7 @@
     <h3 >Receta de {{ $receta->producto->nombre }} - {{ $meses[ $receta->created_at->format('F') ].' '.$receta->created_at->format('Y')}}</h3>
     <hr>
 
-    @if( $receta->producto->nombre != 'Anteojo' )
+    @if( $receta->producto->nombre == 'Anteojo' )
         <div id="{{ $receta->id }}">
             @include('receta.anteojoEdit')
         </div>
@@ -37,7 +37,7 @@
         <hr>
         @foreach( $recetas as $receta )
             <div class="row m-t-5">
-                <button type="button" class="btn btn-default waves-effect btn-panel" onclick="window.location.href='/{{ $usuario->optica_id }}/cliente/{{ $usuario->id }}/receta/{{ $receta->id }}'" style="width: 200px; height: 100px">
+                <button type="button" class="btn btn-default waves-effect btn-panel" onclick="window.location.href='/{{ $usuario->optica_id }}/cliente/{{ $usuario->id }}/receta/{{ $receta->id }}'" style="left:10%; width: 80%; height: 100px">
                     <h4>{{ $receta->producto->nombre }} - {{ $receta->tipo_lente() }}</h4>
                     <p>
                         Detalle: <b>{{ $receta->detalle_lente }}</b><br>

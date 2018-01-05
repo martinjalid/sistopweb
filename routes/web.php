@@ -30,7 +30,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 		Route::get('/cliente', "UsuarioController@getCliente");
 		Route::get('/cliente/nombre/{nombre?}/apellido/{apellido?}/dni/{dni?}', "UsuarioController@getCliente");
-		Route::get('/cliente/{id}/receta/{receta_id}', "UsuarioController@showCliente");
+		Route::get('/cliente/{id}/receta/{producto_id}/{receta_id}', "UsuarioController@showCliente");
 		Route::post('/cliente/{id}/edit', "UsuarioController@editCreate");
 		Route::post('/cliente/create', "UsuarioController@editCreate");
 

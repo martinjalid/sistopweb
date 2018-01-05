@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Carbon\Carbon;
 
 class RecetaLente extends Authenticatable{
     use Notifiable;
@@ -35,8 +36,12 @@ class RecetaLente extends Authenticatable{
     	return $this->hasOne('App\LentePrueba', 'receta_lente_id', 'id');
     }
 
+    public function oftalmologo(){
+    	return $this->hasOne('App\LenteOftalmologo', 'receta_lente_id', 'id');
+    }
+
     public function getCreatedAtAttribute($value){
-        $aux = explode( '-', $value );
-        return $aux[1] . '/' . $aux[0];
+    	$dt = Carbon::parse($value);
+        return $dt;
     }
 };
