@@ -87,7 +87,7 @@
                                 </a>
                             @endif
                             <a>
-                                <i class="fa fa-plus fa-lg pointer" data-toggle="modal" href="#new_receta" data-placement="bottom" data-original-title="Nueva Receta"></i>
+                                <i class="fa fa-plus fa-lg pointer" id="new_receta_button" data-toggle="modal" href="#new_receta" usuario-id="{{ $usuario->id }}" data-placement="bottom" data-original-title="Nueva Receta"></i>
                             </a>
                         </td>
                     </tr>
@@ -231,11 +231,14 @@
                     <div class="row">
                         <div class="form-group">
                             <div class="col-md-2">
-                                <label class="control-label m-t-5">Nombre</label>   
+                                <label class="control-label m-t-5">Tipo de Producto</label>   
                             </div>                              
                             <div class="col-sm-4">
                                 <div class="fg-line">
-                                    <input id="perfil_nombre" class="form-control input-sm" type="text" name="nombre" placeholder="Nombre" value="">
+                                    <select class="select2 form-control">
+                                        <option value="anteojo">Anteojo</option>
+                                        <option value="lente">Lente de Contacto</option>
+                                    </select>
                                 </div>                                  
                             </div>
                             <div class="col-md-2">

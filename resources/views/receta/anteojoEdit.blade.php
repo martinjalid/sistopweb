@@ -15,10 +15,10 @@ function signed($num){
     </div>
     <div class="col-sm-2">
         <div class="fg-line">
-            <input id="tipo_lente" class="form-control input-sm" type="text" value="{{ $receta->tipo_lente() }}" disabled>
+            <input id="tipo_lente" class="form-control input-sm" type="text" value="{{ $receta->tipo_lente->nombre }}" disabled>
         </div>                                  
     </div>
-    @if( $receta->tipo_lente() == 'Monofocal' )
+    @if( $receta->tipo_lente->nombre == 'Monofocal' )
     <?php $select = ( $receta->anteojos()->count() == '2' ) ? '3' : ( $receta->anteojos()->first()->tipo == 'cerca' ? '2' : '1') ;?>
 
     <div class="col-md-1 p-r-0 m-l-10">
@@ -73,8 +73,8 @@ function signed($num){
                 <div class="col-lg-2 multi">
                     <label class="control-label m-t-5">Material Lente</label> 
                     <div class="fg-line">
-                        <select class="select2 form-control" name="material_id"> 
-                            <option value="-1">Material</option>
+                        <select class="select2 form-control" name="material_lente_id"> 
+                            <option value="">Material</option>
                             @foreach($material_lente as $m)
                                 <option value="{{ $m->id }}" {{ $lejos->material_lente_id == $m->id ? 'selected' : '' }}>{{ $m->nombre }}</option>    
                             @endforeach
@@ -85,7 +85,7 @@ function signed($num){
                     <label class="control-label m-t-5">Color</label> 
                     <div class="fg-line">
                         <select class="select2 form-control" name="color_id"> 
-                            <option value="-1">Color</option>
+                            <option value="">Color</option>
                             @foreach($color as $c)
                                 <option value="{{ $c->id }}" {{ $lejos->color_id == $c->id ? 'selected' : '' }} >{{ $c->nombre }}</option>    
                             @endforeach
@@ -121,17 +121,17 @@ function signed($num){
                         <input class="form-control color" name="oi_eje" value="{{ signed($lejos->oi_eje )}}" style="color: {{ $lejos->oi_eje > 0 ? 'green' : '#c00000' }}">
                     </div>                                  
                 </div>
-                <div class="col-lg-2 multi" style="display: block">
+                <div class="col-lg-2" style="display: block">
                     <label class="control-label m-t-5">Armazon</label> 
                     <div class="fg-line">
                         <input class="form-control" name="armazon" value="{{ $lejos->armazon }}" >
                     </div>
                 </div>
-                <div class="col-lg-2 multi" style="display: block">
+                <div class="col-lg-2" style="display: block">
                     <label class="control-label m-t-5">Tratamiento</label> 
                     <div class="fg-line">
                         <select class="select2 form-control" name="tratamiento_id"> 
-                            <option value="-1">Sin Tratamiento</option>
+                            <option value="">Sin Tratamiento</option>
                             @foreach($tratamiento as $t)
                                 <option value="{{ $t->id }}" {{ $lejos->tratamiento_id == $t->id ? 'selected' : '' }} >{{ $t->nombre }}</option>  
                             @endforeach
@@ -186,7 +186,7 @@ function signed($num){
                         <label class="control-label m-t-5">Material Lente</label> 
                         <div class="fg-line">
                             <select class="select2 form-control" name="material_id"> 
-                                <option value="-1">Material</option>
+                                <option value="">Material</option>
                                 @foreach($material_lente as $m)
                                     <option value="{{ $m->id }}" {{ $cerca->material_lente_id == $m->id ? 'selected' : '' }}>{{ $m->nombre }}</option>    
                                 @endforeach
@@ -199,7 +199,7 @@ function signed($num){
                         <label class="control-label m-t-5">Material Lente</label> 
                         <div class="fg-line">
                             <select class="select2 form-control" name="color_id"> 
-                                <option value="-1">Color</option>
+                                <option value="">Color</option>
                                 @foreach($color as $c)
                                     <option value="{{ $c->id }}" {{ $cerca->color_id == $c->id ? 'selected' : '' }} >{{ $c->nombre }}</option>    
                                 @endforeach
@@ -238,7 +238,7 @@ function signed($num){
                         <input class="form-control color" name="oi_eje" value="{{ signed($cerca->oi_eje) }}" style="color: {{ $cerca->oi_eje > 0 ? 'green' : '#c00000' }}">
                     </div>                                  
                 </div>
-                @if( $cerca->armazon )
+                @if( $receta->tipo_lente->nombre == "Monofocal" )
                     <div class="col-lg-2 multi" style="display: block">
                         <label class="control-label m-t-5">Armazon</label> 
                         <div class="fg-line">
@@ -246,12 +246,12 @@ function signed($num){
                         </div>
                     </div>
                 @endif
-                @if( $cerca->tratamiento_id )
+                @if( $receta->tipo_lente->nombre == "Monofocal" )
                     <div class="col-lg-2 multi" style="display: block">
                         <label class="control-label m-t-5">Tratamiento</label> 
                         <div class="fg-line">
                             <select class="select2 form-control" name="tratamiento_id"> 
-                                <option value="-1">Sin Tratamiento</option>
+                                <option value="">Sin Tratamiento</option>
                                 @foreach($tratamiento as $t)
                                     <option value="{{ $t->id }}" {{ $cerca->tratamiento_id == $t->id ? 'selected' : '' }} >{{ $t->nombre }}</option>  
                                 @endforeach
@@ -265,7 +265,7 @@ function signed($num){
                         </div>
                     </div>
                 @endif
-                @if( $cerca->valor_armazon )
+                @if( $receta->tipo_lente->nombre == "Monofocal" )
                     <div class="col-lg-2 multi" >
                         <label class="control-label m-t-5">Valor Armazon</label> 
                         <div class="fg-line">
@@ -277,7 +277,7 @@ function signed($num){
         </div>
     </div>
 @endif
-<div id="medidas_r">
+<div id="receta">
     <hr>
     <div class="row">
         <div class="col-md-1 p-r-0 m-l-10">
@@ -285,7 +285,7 @@ function signed($num){
         </div>
         <div class="col-sm-1">
             <div class="fg-line">
-                <input id="distancia" class="form-control input-sm" type="text" placeholder="Distancia" value="{{ $receta->distancia }}">
+                <input name="distancia" class="form-control input-sm" type="text" placeholder="Distancia" value="{{ $receta->distancia }}">
             </div>                                  
         </div>
         <div class="col-md-1 p-r-0 m-l-10">
@@ -293,7 +293,7 @@ function signed($num){
         </div>
         <div class="col-sm-1">
             <div class="fg-line">
-                <input id="altura" class="form-control input-sm" type="text" placeholder="Altura" value="{{ $receta->altura }}">
+                <input name="altura" class="form-control input-sm" type="text" placeholder="Altura" value="{{ $receta->altura }}">
             </div>                                  
         </div>
         <div class="col-md-1 p-r-0 m-l-10">
@@ -301,7 +301,7 @@ function signed($num){
         </div>
         <div class="col-sm-1">
             <div class="fg-line">
-                <input id="adicion" class="form-control input-sm" type="text" placeholder="Adición" value="{{ $receta->adicion }}">
+                <input name="adicion" class="form-control input-sm" type="text" placeholder="Adición" value="{{ $receta->adicion }}">
             </div>                                  
         </div>
         <div class="col-md-1 p-r-0 m-l-10">
@@ -309,10 +309,10 @@ function signed($num){
         </div>
         <div class="col-sm-2 p-r-0 m-l-10">
             <div class="fg-line">
-                <select class="select2 form-control" name="profesional_{{ $receta->id }}"> 
-                    <option value="-1">Sin Profesional</option>
+                <select class="select2 form-control" name="profesional_id"> 
+                    <option value="">Sin Profesional</option>
                     @foreach( $optica->profesionales as $p)
-                        <option value="{{ $p->id }}" {{ $receta->profesional_id == $p->id ? 'selected' : '' }}>{{ $p->nombre }}</option>    
+                        <option value="{{ $p->id }}" {{ $producto->profesional_id == $p->id ? 'selected' : '' }}>{{ $p->nombre }}</option>    
                     @endforeach
                 </select>
             </div>                                  
@@ -330,7 +330,7 @@ function signed($num){
     </div>
     <div class="row">
         <div class="col-lg-3 m-t-20" style="margin-top: 5px;">
-            <button type="button" name="guardar_receta" class="but btn btn-primary" style="background: #468e46">Guardar Receta</button>
+            <button type="button" id="guardar_receta" class="but btn btn-primary" style="background: #468e46">Guardar Receta</button>
         </div>
     </div>
 </div>

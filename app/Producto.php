@@ -11,6 +11,14 @@ class Producto extends Authenticatable{
 
 	protected $table = 'producto';
 
+    protected $fillable = [
+        'profesional_id',
+        'observacion',
+        'usuario_id',
+        'tipo_producto_id',
+        'activo',
+    ]; 
+
 	public function receta(){
         return $this->hasOne('App\Receta', 'producto_id', 'id');
     }

@@ -47,6 +47,13 @@ Usuario.prototype.bind_events = function(){
 		var new_url 	= _this.tb.make_url(url_origin, 'dni', dni);
 		location.href	= new_url;
 	});
+
+	document.getElementById('new_receta_button').addEventListener('click', function(){
+		var _this = this;
+
+		var usuario_id = $(this).attr('usuario-id');
+
+	});	
 }
 
 var usE = UsuarioEdit = function(){

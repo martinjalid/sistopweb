@@ -31,7 +31,7 @@ class Receta extends Authenticatable{
 	}
 
 	public function tipo_lente(){
-        return $this->hasOne('App\TipoLente', 'id', 'tipo_lente_id')->first()->nombre;
+        return $this->hasOne('App\TipoLente', 'id', 'tipo_lente_id');
     }
 
     public function medico(){
